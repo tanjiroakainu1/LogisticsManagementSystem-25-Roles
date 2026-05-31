@@ -1,6 +1,7 @@
 import type { ChatMessage } from '@/config/chatbot';
 
 const CHAT_ENDPOINT = '/api/chat/completions';
+const DEFAULT_MODEL = 'qwen/qwen-2.5-7b-instruct';
 
 interface ChatCompletionResponse {
   choices?: { message?: { content?: string } }[];
@@ -15,13 +16,19 @@ export async function sendChatMessage(
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
+      model: DEFAULT_MODEL,
       messages: [{ role: 'system', content: systemPrompt }, ...messages],
       max_tokens: 1024,
       temperature: 0.7,
     }),
   });
 
-  const data = (await res.json()) as ChatCompletionResponse;
+  let data: ChatCompletionResponse;
+  try {
+    data = (await res.json()) as ChatCompletionResponse;
+  } catch {
+    throw new Error(`Assistant unavailable (${res.status}). Check OPENROUTER_API_KEY in .env`);
+  }
 
   if (!res.ok) {
     throw new Error(data.error?.message ?? `Assistant unavailable (${res.status})`);

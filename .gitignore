@@ -7,3 +7,4 @@ dist/
 !.env.example
 *.tsbuildinfo
 vite.config.d.ts
+vite.config.js
