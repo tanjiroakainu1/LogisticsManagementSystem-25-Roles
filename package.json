@@ -3,6 +3,11 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tanjiroakainu1/LogisticsManagementSystem-25-Roles.git"
+  },
+  "homepage": "https://github.com/tanjiroakainu1/LogisticsManagementSystem-25-Roles",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
